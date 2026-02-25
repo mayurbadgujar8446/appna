@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ page_title }}</h2>
+<form method="POST" action="{{ form_action }}" class="card p-4 shadow-sm form-card">
+  <div class="mb-3">
+    <label for="name" class="form-label">Task Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      value="{{ task.name if task else '' }}"
+      required
+    />
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="start_time" class="form-label">Start Time</label>
+      <input
+        type="number"
+        class="form-control"
+        id="start_time"
+        name="start_time"
+        min="0"
+        value="{{ task.start_time if task else '' }}"
+        required
+      />
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="end_time" class="form-label">End Time</label>
+      <input
+        type="number"
+        class="form-control"
+        id="end_time"
+        name="end_time"
+        min="1"
+        value="{{ task.end_time if task else '' }}"
+        required
+      />
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="profit" class="form-label">Profit / Priority</label>
+      <input
+        type="number"
+        class="form-control"
+        id="profit"
+        name="profit"
+        min="1"
+        value="{{ task.profit if task else '' }}"
+        required
+      />
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Save Task</button>
+</form>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Smart Schedule (Greedy + DP)</h2>
+  <a href="{{ url_for('generate_schedule') }}" class="btn btn-success">Generate Smart Schedule</a>
+</div>
+
+<h4 class="mt-4">All Tasks (Sorted by End Time - Greedy Step)</h4>
+<div class="table-responsive mb-4">
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in all_tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.start_time }}</td>
+        <td>{{ task.end_time }}</td>
+        <td>{{ task.profit }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center">No tasks available for schedule generation.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h4>Selected Optimal Tasks (DP Result)</h4>
+<p><strong>Total Profit:</strong> {{ optimal_profit }}</p>
+
+<div class="table-responsive mb-4">
+  <table class="table table-striped table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th>ID</th>
+        <th>Task Name</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in selected_tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.start_time }}</td>
+        <td>{{ task.end_time }}</td>
+        <td>{{ task.profit }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center">No non-overlapping tasks selected.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h4>Conflict-Free Timeline View</h4>
+<div class="timeline-wrapper">
+  {% for task in selected_tasks %}
+  <div class="timeline-block">
+    <div class="timeline-time">{{ task.start_time }} - {{ task.end_time }}</div>
+    <div class="timeline-task">{{ task.name }} (Profit: {{ task.profit }})</div>
+  </div>
+  {% else %}
+  <p>No timeline to display.</p>
+  {% endfor %}
+</div>
+{% endblock %}

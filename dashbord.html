@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Total Number of Tasks</h5>
+        <p class="display-6">{{ total_tasks }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Total Profit (All Tasks)</h5>
+        <p class="display-6">{{ total_profit }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Recent Tasks</h4>
+  <a href="{{ url_for('generate_schedule') }}" class="btn btn-success">Generate Smart Schedule</a>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Task Name</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.start_time }}</td>
+        <td>{{ task.end_time }}</td>
+        <td>{{ task.profit }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" class="text-center">No tasks available. Add a task to get started.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
